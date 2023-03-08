@@ -1,20 +1,23 @@
 const express = require('express');
+const authRoutes = require('./routes/authRoutes');
 const app = express();
-const routes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
+const { requireAuth } = require('./middleware/authMiddleware');
 const db = require('./database/db');
 db.database();
+
 
 // middleware
 app.use(express.static('public'));
 app.use(express.json());
 app.use(cookieParser());
+
 // view engine
 app.set('view engine', 'ejs');
 
 // routes
 app.get('/', (req, res) => res.render('home'));
-app.get('/smoothies', (req, res) => res.render('smoothies'));
-app.use(routes);
+app.get('/smoothies', requireAuth, (req, res) => res.render('smoothies'));
+app.use(authRoutes);
 
 app.listen(3000, () => { console.log('Up and running.')});
