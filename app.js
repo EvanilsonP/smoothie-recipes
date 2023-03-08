@@ -1,12 +1,14 @@
 const express = require('express');
-const db = require('./database/db');
 const app = express();
 const routes = require('./routes/authRoutes');
+const cookieParser = require('cookie-parser');
+const db = require('./database/db');
 db.database();
 
 // middleware
 app.use(express.static('public'));
 app.use(express.json());
+app.use(cookieParser());
 // view engine
 app.set('view engine', 'ejs');
 
