@@ -34,7 +34,7 @@
         body: JSON.stringify({ email, password }),
         headers: {'Content-Type': 'application/json'}
       });
-      const data = await res.json(); // shoes either user id or an error
+      const data = await res.json(); // showes either user id or an error
       console.log(data);
       if(data.errors) {
         emailError.textContent = data.errors.email;
